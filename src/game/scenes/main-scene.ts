@@ -17,6 +17,7 @@ export class MainScene extends Phaser.Scene {
     blocks: GroupConfig;
     background: Background;
     camera: Phaser.Cameras.Scene2D.Camera;
+    tilePosition: number = 0;
 
     constructor() {
         super("PlayGame");
@@ -68,11 +69,13 @@ export class MainScene extends Phaser.Scene {
             this
         );
 
-        this.camera = this.cameras.main.startFollow(this.player);
+        this.camera = this.cameras.main.startFollow(this.player, false, 0, 0, -300, 0);
+        this.camera.setScroll(0);
     }
 
     update() {
         this.player.update();
-        this.background.tilePositionX = this.camera.scrollX * 0.3;
+        this.background.tilePositionX = this.background.tilePositionX + 1;
+
     }
 }

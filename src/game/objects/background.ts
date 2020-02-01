@@ -14,11 +14,11 @@ export class Background extends Phaser.GameObjects.TileSprite {
         this.setScrollFactor(0);
 
         // physics
-        this.scene.physics.world.enable(this);
-        this.body.setSize(1, 1);
-        this.body.setAllowGravity(false);
-        this.body.setImmovable(true);
-        this.body.setVelocityX(-100);
+        //this.scene.physics.world.enable(this);
+        //this.body.setSize(1, 1);
+        //this.body.setAllowGravity(false);
+        //this.body.setImmovable(true);
+        //this.body.setVelocityX(-100);
     }
 
     update() {
