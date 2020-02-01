@@ -10,6 +10,7 @@ enum KEYS {
     BLOCK3 = "block3",
     PLAYER = "player",
     BACKGROUND = "background",
+    BGLAYER0 = "bglayer0",
     BGLAYER1 = "bglayer1",
     BGLAYER2 = "bglayer2",
 }
@@ -30,6 +31,7 @@ export class MainScene extends Phaser.Scene {
     player: Player;
     blocks: GroupConfig;
     background: Phaser.GameObjects.Image;
+    bglayer0: BGLayer;
     bglayer1: BGLayer;
     bglayer2: BGLayer;
     camera: Phaser.Cameras.Scene2D.Camera;
@@ -51,7 +53,8 @@ export class MainScene extends Phaser.Scene {
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
         this.load.image(KEYS.BLOCK3, "./src/game/assets/stone3.jpg");
-        this.load.image(KEYS.BACKGROUND, "./src/game/assets/layer-fixed.jpg")
+        this.load.image(KEYS.BACKGROUND, "./src/game/assets/layer-fixed.jpg");
+        this.load.image(KEYS.BGLAYER0, "./src/game/assets/layer-0.png");
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
         this.load.image(KEYS.BGLAYER2, "./src/game/assets/layer-1.png");
     }
@@ -105,12 +108,18 @@ export class MainScene extends Phaser.Scene {
             }));
         }
 
-
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
             y: this.sys.canvas.height - Block.SIZE * 2 + 30,
             key: KEYS.PLAYER
+        });
+
+        this.bglayer0 = new BGLayer({
+            scene: this,
+            x: 0,
+            y: 0,
+            key: KEYS.BGLAYER0
         });
 
         this.physics.add.collider(
@@ -127,6 +136,7 @@ export class MainScene extends Phaser.Scene {
 
     update() {
         this.player.update();
+        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5;
         this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1;
         this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2;
 
