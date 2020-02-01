@@ -1,4 +1,4 @@
-export class Background extends Phaser.GameObjects.TileSprite {
+export class BGLayer extends Phaser.GameObjects.TileSprite {
 
     constructor(params) { // 4375
         super(params.scene, params.x, params.y, 1360, 750, params.key);

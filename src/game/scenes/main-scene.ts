@@ -2,20 +2,25 @@ import {Player} from "../objects/player";
 import {Block} from "../objects/block";
 
 import GroupConfig = Phaser.GameObjects.Group;
-import { Background } from "../objects/background";
+import { BGLayer } from "../objects/bglayer";
 
 enum KEYS {
-    BLOCK = "block",
+    BLOCK1 = "block1",
+    BLOCK2 = "block2",
+    BLOCK3 = "block3",
     PLAYER = "player",
-    BACKGROUND = "background"
+    BACKGROUND = "background",
+    BGLAYER1 = "bglayer1",
+    BGLAYER2 = "bglayer2"
 }
-
 
 // playGame scene
 export class MainScene extends Phaser.Scene {
     player: Player;
     blocks: GroupConfig;
-    background: Background;
+    background: Phaser.GameObjects.Image;
+    bglayer1: BGLayer;
+    bglayer2: BGLayer;
     camera: Phaser.Cameras.Scene2D.Camera;
     tilePosition: number = 0;
 
@@ -25,22 +30,35 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
-        this.load.image(KEYS.BLOCK, "./src/game/assets/stone.jpg");
-        this.load.image(KEYS.BACKGROUND, "./src/game/assets/level-750.jpg");
+        this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
+        this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
+        this.load.image(KEYS.BLOCK3, "./src/game/assets/stone3.jpg");
+        this.load.image(KEYS.BACKGROUND, "./src/game/assets/layer-fixed.jpg")
+        this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
+        this.load.image(KEYS.BGLAYER2, "./src/game/assets/layer-1.png");
     }
 
     create() {
+        this.background = this.add.image(0, 0, KEYS.BACKGROUND);
+        this.background.setOrigin(0);
 
         this.blocks = this.add.group({
             /*classType: Blocks,*/
             runChildUpdate: true
         });
 
-        this.background = new Background({
+        this.bglayer1 = new BGLayer({
             scene: this,
             x: 0,
             y: 0,
-            key: KEYS.BACKGROUND
+            key: KEYS.BGLAYER1
+        });
+
+        this.bglayer2 = new BGLayer({
+            scene: this,
+            x: 0,
+            y: 0,
+            key: KEYS.BGLAYER2
         });
 
         for (let x = 0; x < 20; x++) {
@@ -48,8 +66,8 @@ export class MainScene extends Phaser.Scene {
             new Block({
                 scene: this,
                 x: x * Block.SIZE,
-                y: this.sys.canvas.height - 100,
-                key: KEYS.BLOCK
+                y: this.sys.canvas.height - Block.SIZE,
+                key: (Math.random() > .5 ? KEYS.BLOCK1 : KEYS.BLOCK2)
             }));
         }
 
@@ -57,7 +75,7 @@ export class MainScene extends Phaser.Scene {
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
-            y: this.sys.canvas.height * 0.75,
+            y: this.sys.canvas.height - Block.SIZE * 2 + 30,
             key: KEYS.PLAYER
         });
 
@@ -75,7 +93,8 @@ export class MainScene extends Phaser.Scene {
 
     update() {
         this.player.update();
-        this.background.tilePositionX = this.background.tilePositionX + 1;
+        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1;
+        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2;
 
     }
 }
