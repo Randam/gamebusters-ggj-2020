@@ -1,7 +1,7 @@
 import {Player} from "../objects/player";
 import {Block} from "../objects/block";
 import {RepairableBlock} from "../objects/repairableBlock";
-import { BGLayer } from "../objects/bglayer";
+import {BGLayer} from "../objects/bglayer";
 
 import GroupConfig = Phaser.GameObjects.Group;
 
@@ -39,7 +39,7 @@ export class MainScene extends Phaser.Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     music: Phaser.Sound.BaseSound;
     yawn: Array<Phaser.Sound.BaseSound> = [];
-    yawnTimer: number =0;
+    yawnTimer: number = 0;
 
     constructor() {
         super("PlayGame");
@@ -51,7 +51,12 @@ export class MainScene extends Phaser.Scene {
         this.load.audio(SOUND.YAWN3, "./src/game/assets/yawn3.mp3");
         this.load.audio(SOUND.YAWN4, "./src/game/assets/yawn4.mp3");
         this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a");
-        this.load.spritesheet(KEYS.PLAYER, "./src/game/assets/character_sprite.png", { frameWidth: 220, frameHeight: 350, startFrame: 0, endFrame: 44 });
+        this.load.spritesheet(KEYS.PLAYER, "./src/game/assets/character_sprite.png", {
+            frameWidth: 220,
+            frameHeight: 350,
+            startFrame: 0,
+            endFrame: 44
+        });
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
         this.load.image(KEYS.REPAIRBLOCK, "./src/game/assets/stone3.jpg");
@@ -66,18 +71,19 @@ export class MainScene extends Phaser.Scene {
         this.yawn[1] = this.sound.add(SOUND.YAWN2);
         this.yawn[2] = this.sound.add(SOUND.YAWN3);
 
-        var animConfig = {
+        let animConfig = {
             key: "sleepwalk",
-            frames: this.anims.generateFrameNumbers(KEYS.PLAYER, { start: 0, end: 43 }),
+            frames: this.anims.generateFrameNumbers(KEYS.PLAYER, {start: 0, end: 43}),
             frameRate: 20,
             yoyo: false,
             repeat: -1
         };
-    
+
         let anim = this.anims.create(animConfig);
 
         this.music = this.sound.add(MUSIC.TITLE);
-        var loopMarker = {
+
+        let loopMarker = {
             name: 'loop',
             start: 0,
             duration: this.music.totalDuration,
@@ -86,7 +92,7 @@ export class MainScene extends Phaser.Scene {
             }
         };
         this.music.addMarker(loopMarker);
-        this.music.play("loop", { loop: true });
+        this.music.play("loop", {loop: true});
 
         this.background = this.add.image(0, 0, KEYS.BACKGROUND);
         this.background.setOrigin(0);
@@ -115,14 +121,14 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x < 12; x++) {
+        for (let x = 0; x <= 17; x++) {
             this.blocks.add(
-            new Block({
-                scene: this,
-                x: x * Block.SIZE,
-                y: this.sys.canvas.height - Block.SIZE,
-                key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
-            }));
+                new Block({
+                    scene: this,
+                    x: x * Block.SIZE,
+                    y: this.sys.canvas.height - Block.SIZE,
+                    key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
+                }));
         }
 
         for (let x = 0; x < 20; x++) {
@@ -136,6 +142,9 @@ export class MainScene extends Phaser.Scene {
                     }));
             }
         }
+
+        // set transparency
+        // Phaser.Actions.SetAlpha(this.blocks.getChildren(), 0);
 
         this.player = new Player({
             scene: this,
@@ -168,14 +177,34 @@ export class MainScene extends Phaser.Scene {
 
     update() {
         this.player.update();
+
+        this.moveBackgrounds();
+        this.playYawnSound();
+        this.addBlocks();
+    }
+
+    moveBackgrounds() {
         this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5;
         this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1;
         this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2;
+    }
 
+    playYawnSound() {
         if (this.bglayer1.tilePositionX > this.yawnTimer) {
             this.yawn[Math.floor(Math.random() * 3)].play();
             this.yawnTimer = this.yawnTimer + Math.random() * 500 + 200;
         }
+    }
 
+    addBlocks() {
+        if (this.blocks.getLength() <= 17) {
+            this.blocks.add(
+                new Block({
+                    scene: this,
+                    x: this.sys.canvas.width,
+                    y: this.sys.canvas.height - Block.SIZE,
+                    key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
+                }));
+        }
     }
 }
