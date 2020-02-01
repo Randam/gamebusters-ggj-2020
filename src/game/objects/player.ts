@@ -11,7 +11,7 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
     }
 
-    private initSprite () {
+    private initSprite() {
         // physics
         this.scene.physics.world.enable(this);
         this.body.setGravityY(4000);
@@ -30,9 +30,9 @@ export class Player extends Phaser.GameObjects.Sprite {
                 this.scream.play();
             }
             this.falling = true;
-        //    this.body.angularVelocity = 200;
-        //    this.body.angularAcceleration = 200;
-        //   this.body.allowRotation = true;
+            //    this.body.angularVelocity = 200;
+            //    this.body.angularAcceleration = 200;
+            //   this.body.allowRotation = true;
         }
     }
 }

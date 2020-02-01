@@ -41,7 +41,7 @@ export class MainScene extends Phaser.Scene {
     music: Phaser.Sound.BaseSound;
     yawn: Array<Phaser.Sound.BaseSound> = [];
     scream: Phaser.Sound.BaseSound;
-    yawnTimer: number =0;
+    yawnTimer: number = 0;
 
     constructor() {
         super("PlayGame");

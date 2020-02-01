@@ -31,7 +31,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         }
 
         if (this.repairable) {
-            this.on("pointerdown", function() {
+            this.on("pointerdown", function () {
                 this.repairable = false;
                 console.log(this.repairable);
             });
