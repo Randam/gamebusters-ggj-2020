@@ -76,7 +76,7 @@ export class MainScene extends Phaser.Scene {
             }
         };
         this.music.addMarker(loopMarker);
-        this.music.play("loop", { delay: 0 });
+        this.music.play("loop", { loop: true });
 
         this.background = this.add.image(0, 0, KEYS.BACKGROUND);
         this.background.setOrigin(0);
