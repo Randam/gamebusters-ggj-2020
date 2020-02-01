@@ -21,24 +21,13 @@ const config: Phaser.Types.Core.GameConfig = {
   }
 };
 
-// global game options
-export const gameOptions = {
-  platformStartSpeed: 350,
-  spawnRange: [100, 350],
-  platformSizeRange: [50, 250],
-  playerGravity: 900,
-  jumpForce: 400,
-  playerStartPosition: 200,
-  jumps: 2
-}
-
 export class Game extends Phaser.Game {
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config);
   }
 }
 
-let game;
+let game: Game;
 
 // when the page is loaded, create our game instance
 window.addEventListener("load", () => {
