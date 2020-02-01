@@ -20,6 +20,7 @@ export class Block extends Phaser.GameObjects.Sprite {
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
         this.body.setVelocityX(-100);
+        this.setVisible(false);
     }
 
     update() {

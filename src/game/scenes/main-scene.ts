@@ -152,9 +152,6 @@ export class MainScene extends Phaser.Scene {
             }
         }
 
-        // set transparency
-        // Phaser.Actions.SetAlpha(this.blocks.getChildren(), 0);
-
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
