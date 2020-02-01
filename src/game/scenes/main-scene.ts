@@ -20,7 +20,7 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
-        this.load.spritesheet(KEYS.BLOCK, "./src/games/coin-runner/assets/background.png", { frameHeight: 32, frameWidth: 32 });
+        this.load.spritesheet(KEYS.BLOCK, "./src/game/assets/stone.jpg", { frameHeight: 32, frameWidth: 32 });
     }
 
     create() {
