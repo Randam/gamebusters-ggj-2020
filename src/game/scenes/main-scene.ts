@@ -24,7 +24,8 @@ enum SOUND {
     YAWN1 = "yawn1",
     YAWN2 = "yawn2",
     YAWN3 = "yawn3",
-    YAWN4 = "yawn4"
+    YAWN4 = "yawn4",
+    SCREAM = "scream"
 }
 
 // playGame scene
@@ -39,13 +40,15 @@ export class MainScene extends Phaser.Scene {
     camera: Phaser.Cameras.Scene2D.Camera;
     music: Phaser.Sound.BaseSound;
     yawn: Array<Phaser.Sound.BaseSound> = [];
-    yawnTimer: number = 0;
+    scream: Phaser.Sound.BaseSound;
+    yawnTimer: number =0;
 
     constructor() {
         super("PlayGame");
     }
 
     preload() {
+        this.load.audio(SOUND.SCREAM, "./src/game/assets/scream.mp3");
         this.load.audio(SOUND.YAWN1, "./src/game/assets/yawn1.mp3");
         this.load.audio(SOUND.YAWN2, "./src/game/assets/yawn2.mp3");
         this.load.audio(SOUND.YAWN3, "./src/game/assets/yawn3.mp3");
@@ -70,6 +73,7 @@ export class MainScene extends Phaser.Scene {
         this.yawn[0] = this.sound.add(SOUND.YAWN1);
         this.yawn[1] = this.sound.add(SOUND.YAWN2);
         this.yawn[2] = this.sound.add(SOUND.YAWN3);
+        this.scream = this.sound.add(SOUND.SCREAM);
 
         let animConfig = {
             key: "sleepwalk",
@@ -150,7 +154,8 @@ export class MainScene extends Phaser.Scene {
             scene: this,
             x: this.sys.canvas.width * 0.25,
             y: 534,
-            key: KEYS.PLAYER
+            key: KEYS.PLAYER,
+            scream: this.scream
         });
 
         this.player.anims.play("sleepwalk");
@@ -190,7 +195,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     playYawnSound() {
-        if (this.bglayer1.tilePositionX > this.yawnTimer) {
+        if (this.bglayer1.tilePositionX > this.yawnTimer && !this.player.falling) {
             this.yawn[Math.floor(Math.random() * 3)].play();
             this.yawnTimer = this.yawnTimer + Math.random() * 500 + 200;
         }
