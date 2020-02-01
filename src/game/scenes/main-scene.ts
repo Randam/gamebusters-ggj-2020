@@ -115,7 +115,7 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x < 16; x++) {
+        for (let x = 0; x < 12; x++) {
             this.blocks.add(
             new Block({
                 scene: this,
@@ -140,7 +140,7 @@ export class MainScene extends Phaser.Scene {
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
-            y: this.sys.canvas.height - Block.SIZE * 3,
+            y: 534,
             key: KEYS.PLAYER
         });
 

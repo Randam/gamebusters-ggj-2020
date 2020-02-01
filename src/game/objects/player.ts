@@ -10,8 +10,9 @@ export class Player extends Phaser.GameObjects.Sprite {
     private initSprite () {
         // physics
         this.scene.physics.world.enable(this);
-        this.body.setGravityY(5000);
+        this.body.setGravityY(4000);
         this.body.setVelocityX(100);
+        this.body.setSize(this.width / 1.5);
 
         // sprite
         this.setScale(1);
@@ -19,5 +20,11 @@ export class Player extends Phaser.GameObjects.Sprite {
 
     update(...args): void {
         super.update(...args);
+        console.log(this.body.velocity.y);
+        //if (this.body.velocity.y > 0) {
+        //    this.body.angularVelocity = 200;
+        //    this.body.angularAcceleration = 200;
+        //   this.body.allowRotation = true;
+        //}
     }
 }
