@@ -115,7 +115,7 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x < 19; x++) {
+        for (let x = 0; x < 16; x++) {
             this.blocks.add(
             new Block({
                 scene: this,

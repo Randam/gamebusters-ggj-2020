@@ -10,7 +10,7 @@ export class Player extends Phaser.GameObjects.Sprite {
     private initSprite () {
         // physics
         this.scene.physics.world.enable(this);
-        this.body.setGravityY(1000);
+        this.body.setGravityY(5000);
         this.body.setVelocityX(100);
 
         // sprite
