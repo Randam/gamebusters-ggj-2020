@@ -11,7 +11,11 @@ enum KEYS {
     PLAYER = "player",
     BACKGROUND = "background",
     BGLAYER1 = "bglayer1",
-    BGLAYER2 = "bglayer2"
+    BGLAYER2 = "bglayer2",
+}
+
+enum MUSIC {
+    TITLE = "title"
 }
 
 // playGame scene
@@ -22,13 +26,14 @@ export class MainScene extends Phaser.Scene {
     bglayer1: BGLayer;
     bglayer2: BGLayer;
     camera: Phaser.Cameras.Scene2D.Camera;
-    tilePosition: number = 0;
+    music: Phaser.Sound.BaseSound;
 
     constructor() {
         super("PlayGame");
     }
 
     preload() {
+        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a")
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
@@ -39,6 +44,18 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.music = this.sound.add(MUSIC.TITLE);
+        var loopMarker = {
+            name: 'loop',
+            start: 0,
+            duration: this.music.totalDuration,
+            config: {
+                loop: true
+            }
+        };
+        this.music.addMarker(loopMarker);
+        this.music.play("loop", { delay: 0 });
+
         this.background = this.add.image(0, 0, KEYS.BACKGROUND);
         this.background.setOrigin(0);
 
