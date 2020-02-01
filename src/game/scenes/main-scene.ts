@@ -1,13 +1,14 @@
 import {Player} from "../objects/player";
 import {Block} from "../objects/block";
+import {RepairableBlock} from "../objects/repairableBlock";
+import { BGLayer } from "../objects/bglayer";
 
 import GroupConfig = Phaser.GameObjects.Group;
-import { BGLayer } from "../objects/bglayer";
 
 enum KEYS {
     BLOCK1 = "block1",
     BLOCK2 = "block2",
-    BLOCK3 = "block3",
+    REPAIRBLOCK = "repairblock",
     PLAYER = "player",
     BACKGROUND = "background",
     BGLAYER0 = "bglayer0",
@@ -30,6 +31,7 @@ enum SOUND {
 export class MainScene extends Phaser.Scene {
     player: Player;
     blocks: GroupConfig;
+    repairBlocks: GroupConfig;
     background: Phaser.GameObjects.Image;
     bglayer0: BGLayer;
     bglayer1: BGLayer;
@@ -48,11 +50,11 @@ export class MainScene extends Phaser.Scene {
         this.load.audio(SOUND.YAWN2, "./src/game/assets/yawn2.mp3");
         this.load.audio(SOUND.YAWN3, "./src/game/assets/yawn3.mp3");
         this.load.audio(SOUND.YAWN4, "./src/game/assets/yawn4.mp3");
-        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a")
+        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a");
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
-        this.load.image(KEYS.BLOCK3, "./src/game/assets/stone3.jpg");
+        this.load.image(KEYS.REPAIRBLOCK, "./src/game/assets/stone3.jpg");
         this.load.image(KEYS.BACKGROUND, "./src/game/assets/layer-fixed.jpg");
         this.load.image(KEYS.BGLAYER0, "./src/game/assets/layer-0.png");
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
@@ -84,6 +86,11 @@ export class MainScene extends Phaser.Scene {
             runChildUpdate: true
         });
 
+        this.repairBlocks = this.add.group({
+            /*classType: Blocks,*/
+            runChildUpdate: true
+        });
+
         this.bglayer1 = new BGLayer({
             scene: this,
             x: 0,
@@ -104,8 +111,20 @@ export class MainScene extends Phaser.Scene {
                 scene: this,
                 x: x * Block.SIZE,
                 y: this.sys.canvas.height - Block.SIZE,
-                key: (Math.random() > .5 ? KEYS.BLOCK1 : KEYS.BLOCK2)
+                key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
             }));
+        }
+
+        for (let x = 0; x < 20; x++) {
+            if (Math.random() > .8) {
+                this.repairBlocks.add(
+                    new RepairableBlock({
+                        scene: this,
+                        x: x * 60,
+                        y: this.sys.canvas.height - 60,
+                        key: KEYS.REPAIRBLOCK
+                    }));
+            }
         }
 
         this.player = new Player({
