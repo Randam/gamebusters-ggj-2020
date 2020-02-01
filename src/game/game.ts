@@ -1,14 +1,9 @@
-/**
- * @author       Digitsensitive <digit.sensitivee@gmail.com>
- * @copyright    2018 - 2019 digitsensitive
- * @license      {@link https://github.com/digitsensitive/phaser3-typescript/blob/master/LICENSE.md | MIT License}
- */
-
 import "phaser";
 import { MainScene } from "./scenes/main-scene";
+import GameConfig = Phaser.Types.Core.GameConfig;
 
 // main game configuration
-const config: Phaser.Types.Core.GameConfig = {
+const config: GameConfig = {
   type: Phaser.AUTO,
   width: 1334,
   height: 750,
@@ -30,10 +25,10 @@ export const gameOptions = {
   jumpForce: 400,
   playerStartPosition: 200,
   jumps: 2
-}
+};
 
 export class Game extends Phaser.Game {
-  constructor(config: Phaser.Types.Core.GameConfig) {
+  constructor(config: GameConfig) {
     super(config);
   }
 }
