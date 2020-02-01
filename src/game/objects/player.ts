@@ -14,7 +14,7 @@ export class Player extends Phaser.GameObjects.Image {
         this.body.setVelocityX(100);
 
         // sprite
-        this.setScale(1.5);
+        this.setScale(2);
     }
 
     update(...args): void {

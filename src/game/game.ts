@@ -5,7 +5,7 @@ import GameConfig = Phaser.Types.Core.GameConfig;
 // main game configuration
 const config: GameConfig = {
   type: Phaser.AUTO,
-  width: 1334,
+  width: 1360,
   height: 750,
   scene: MainScene,
   backgroundColor: 0x444444,

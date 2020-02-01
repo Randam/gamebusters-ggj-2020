@@ -2,10 +2,12 @@ import {Player} from "../objects/player";
 import {Block} from "../objects/block";
 
 import GroupConfig = Phaser.GameObjects.Group;
+import { Background } from "../objects/background";
 
 enum KEYS {
     BLOCK = "block",
-    PLAYER = "player"
+    PLAYER = "player",
+    BACKGROUND = "background"
 }
 
 
@@ -13,6 +15,8 @@ enum KEYS {
 export class MainScene extends Phaser.Scene {
     player: Player;
     blocks: GroupConfig;
+    background: Background;
+    camera: Phaser.Cameras.Scene2D.Camera;
 
     constructor() {
         super("PlayGame");
@@ -20,7 +24,8 @@ export class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
-        this.load.spritesheet(KEYS.BLOCK, "./src/game/assets/stone.jpg", { frameHeight: 32, frameWidth: 32 });
+        this.load.image(KEYS.BLOCK, "./src/game/assets/stone.jpg");
+        this.load.image(KEYS.BACKGROUND, "./src/game/assets/level-750.jpg");
     }
 
     create() {
@@ -30,15 +35,20 @@ export class MainScene extends Phaser.Scene {
             runChildUpdate: true
         });
 
+        this.background = new Background({
+            scene: this,
+            x: 0,
+            y: 0,
+            key: KEYS.BACKGROUND
+        });
 
         for (let x = 0; x < 20; x++) {
             this.blocks.add(
             new Block({
                 scene: this,
-                x: x * 32,
-                y: this.sys.canvas.height * 0.90,
-                key: KEYS.BLOCK,
-                value: 50
+                x: x * Block.SIZE,
+                y: this.sys.canvas.height - 100,
+                key: KEYS.BLOCK
             }));
         }
 
@@ -57,9 +67,12 @@ export class MainScene extends Phaser.Scene {
             null,
             this
         );
+
+        this.camera = this.cameras.main.startFollow(this.player);
     }
 
     update() {
         this.player.update();
+        this.background.tilePositionX = this.camera.scrollX * 0.3;
     }
 }

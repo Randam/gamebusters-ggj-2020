@@ -1,8 +1,7 @@
-export class Block extends Phaser.GameObjects.Sprite {
-    static SIZE = 80;
+export class Background extends Phaser.GameObjects.TileSprite {
 
-    constructor(params) {
-        super(params.scene, params.x, params.y, params.key);
+    constructor(params) { // 4375
+        super(params.scene, params.x, params.y, 1360, 750, params.key);
 
         // variables
         this.initSprite();
@@ -12,7 +11,7 @@ export class Block extends Phaser.GameObjects.Sprite {
     private initSprite() {
         // sprite
         this.setOrigin(0, 0);
-        this.setFrame(0);
+        this.setScrollFactor(0);
 
         // physics
         this.scene.physics.world.enable(this);
@@ -23,9 +22,5 @@ export class Block extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        if (this.x < (Block.SIZE - 1) * -1) {
-            this.setX(this.scene.sys.canvas.width + Block.SIZE);
-        }
-
     }
 }
