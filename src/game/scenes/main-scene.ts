@@ -16,8 +16,13 @@ enum KEYS {
     BGLAYER2 = "bglayer2",
 }
 
+enum ANIMATION {
+    SLEEPWALK = "sleepwalk"
+}
+
 enum MUSIC {
-    TITLE = "title"
+    TITLE = "title",
+    LOOP = "loop"
 }
 
 enum SOUND {
@@ -76,9 +81,9 @@ export class MainScene extends Phaser.Scene {
         this.scream = this.sound.add(SOUND.SCREAM);
 
         let animConfig = {
-            key: "sleepwalk",
+            key: ANIMATION.SLEEPWALK,
             frames: this.anims.generateFrameNumbers(KEYS.PLAYER, {start: 0, end: 43}),
-            frameRate: 20,
+            frameRate: 43,
             yoyo: false,
             repeat: -1
         };
@@ -88,7 +93,7 @@ export class MainScene extends Phaser.Scene {
         this.music = this.sound.add(MUSIC.TITLE);
 
         let loopMarker = {
-            name: 'loop',
+            name: MUSIC.LOOP,
             start: 0,
             duration: this.music.totalDuration,
             config: {
@@ -96,7 +101,7 @@ export class MainScene extends Phaser.Scene {
             }
         };
         this.music.addMarker(loopMarker);
-        this.music.play("loop", {loop: true});
+        this.music.play(MUSIC.LOOP, {loop: true});
 
         this.background = this.add.image(0, 0, KEYS.BACKGROUND);
         this.background.setOrigin(0);
@@ -158,7 +163,7 @@ export class MainScene extends Phaser.Scene {
             scream: this.scream
         });
 
-        this.player.anims.play("sleepwalk");
+        this.player.anims.play(ANIMATION.SLEEPWALK);
 
 
         this.bglayer0 = new BGLayer({
