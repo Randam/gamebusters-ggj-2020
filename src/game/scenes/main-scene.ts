@@ -12,7 +12,18 @@ enum KEYS {
     BACKGROUND = "background",
     BGLAYER0 = "bglayer0",
     BGLAYER1 = "bglayer1",
-    BGLAYER2 = "bglayer2"
+    BGLAYER2 = "bglayer2",
+}
+
+enum MUSIC {
+    TITLE = "title"
+}
+
+enum SOUND {
+    YAWN1 = "yawn1",
+    YAWN2 = "yawn2",
+    YAWN3 = "yawn3",
+    YAWN4 = "yawn4"
 }
 
 // playGame scene
@@ -24,13 +35,20 @@ export class MainScene extends Phaser.Scene {
     bglayer1: BGLayer;
     bglayer2: BGLayer;
     camera: Phaser.Cameras.Scene2D.Camera;
-    tilePosition: number = 0;
+    music: Phaser.Sound.BaseSound;
+    yawn: Array<Phaser.Sound.BaseSound> = [];
+    yawnTimer: number =0;
 
     constructor() {
         super("PlayGame");
     }
 
     preload() {
+        this.load.audio(SOUND.YAWN1, "./src/game/assets/yawn1.mp3");
+        this.load.audio(SOUND.YAWN2, "./src/game/assets/yawn2.mp3");
+        this.load.audio(SOUND.YAWN3, "./src/game/assets/yawn3.mp3");
+        this.load.audio(SOUND.YAWN4, "./src/game/assets/yawn4.mp3");
+        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a")
         this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
@@ -42,6 +60,22 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.yawn[0] = this.sound.add(SOUND.YAWN1);
+        this.yawn[1] = this.sound.add(SOUND.YAWN2);
+        this.yawn[2] = this.sound.add(SOUND.YAWN3);
+
+        this.music = this.sound.add(MUSIC.TITLE);
+        var loopMarker = {
+            name: 'loop',
+            start: 0,
+            duration: this.music.totalDuration,
+            config: {
+                loop: true
+            }
+        };
+        this.music.addMarker(loopMarker);
+        this.music.play("loop", { delay: 0 });
+
         this.background = this.add.image(0, 0, KEYS.BACKGROUND);
         this.background.setOrigin(0);
 
@@ -64,7 +98,7 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x < 20; x++) {
+        for (let x = 0; x < 19; x++) {
             this.blocks.add(
             new Block({
                 scene: this,
@@ -105,6 +139,11 @@ export class MainScene extends Phaser.Scene {
         this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5;
         this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1;
         this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2;
+
+        if (this.bglayer1.tilePositionX > this.yawnTimer) {
+            this.yawn[Math.floor(Math.random() * 3)].play();
+            this.yawnTimer = this.yawnTimer + Math.random() * 500 + 200;
+        }
 
     }
 }
