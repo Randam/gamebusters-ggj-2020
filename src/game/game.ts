@@ -33,7 +33,7 @@ export class Game extends Phaser.Game {
   }
 }
 
-let game;
+let game: Game;
 
 // when the page is loaded, create our game instance
 window.addEventListener("load", () => {
