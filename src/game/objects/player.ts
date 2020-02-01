@@ -1,4 +1,4 @@
-export class Player extends Phaser.GameObjects.Image {
+export class Player extends Phaser.GameObjects.Sprite {
     constructor(params) {
         super(params.scene, params.x, params.y, params.key);
 
@@ -14,7 +14,7 @@ export class Player extends Phaser.GameObjects.Image {
         this.body.setVelocityX(100);
 
         // sprite
-        this.setScale(2);
+        this.setScale(1);
     }
 
     update(...args): void {

@@ -48,8 +48,8 @@ export class MainScene extends Phaser.Scene {
         this.load.audio(SOUND.YAWN2, "./src/game/assets/yawn2.mp3");
         this.load.audio(SOUND.YAWN3, "./src/game/assets/yawn3.mp3");
         this.load.audio(SOUND.YAWN4, "./src/game/assets/yawn4.mp3");
-        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a")
-        this.load.image(KEYS.PLAYER, "./src/games/coin-runner/assets/player.png");
+        this.load.audio(MUSIC.TITLE, "./src/game/assets/title.m4a");
+        this.load.spritesheet(KEYS.PLAYER, "./src/game/assets/character_sprite.png", { frameWidth: 220, frameHeight: 350, startFrame: 0, endFrame: 44 });
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
         this.load.image(KEYS.BLOCK3, "./src/game/assets/stone3.jpg");
@@ -63,6 +63,16 @@ export class MainScene extends Phaser.Scene {
         this.yawn[0] = this.sound.add(SOUND.YAWN1);
         this.yawn[1] = this.sound.add(SOUND.YAWN2);
         this.yawn[2] = this.sound.add(SOUND.YAWN3);
+
+        var animConfig = {
+            key: "sleepwalk",
+            frames: this.anims.generateFrameNumbers(KEYS.PLAYER, { start: 0, end: 43 }),
+            frameRate: 20,
+            yoyo: false,
+            repeat: -1
+        };
+    
+        let anim = this.anims.create(animConfig);
 
         this.music = this.sound.add(MUSIC.TITLE);
         var loopMarker = {
@@ -111,9 +121,12 @@ export class MainScene extends Phaser.Scene {
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
-            y: this.sys.canvas.height - Block.SIZE * 2 + 30,
+            y: this.sys.canvas.height - Block.SIZE * 3,
             key: KEYS.PLAYER
         });
+
+        this.player.anims.play("sleepwalk");
+
 
         this.bglayer0 = new BGLayer({
             scene: this,
