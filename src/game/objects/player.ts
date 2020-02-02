@@ -24,7 +24,7 @@ export class Player extends Phaser.GameObjects.Sprite {
 
     update(...args): void {
         super.update(...args);
-        console.log(this.body.velocity.y);
+
         if (this.body.velocity.y > 0) {
             if (!this.falling) {
                 this.scream.play();

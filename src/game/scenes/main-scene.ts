@@ -14,6 +14,7 @@ export enum KEYS {
     BGLAYER0 = "bglayer0",
     BGLAYER1 = "bglayer1",
     BGLAYER2 = "bglayer2",
+    REPAIRPARTICLE = "repairparticle"
 }
 
 enum ANIMATION {
@@ -76,6 +77,7 @@ export class MainScene extends Phaser.Scene {
         this.load.image(KEYS.BGLAYER0, "./src/game/assets/layer-0.png");
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
         this.load.image(KEYS.BGLAYER2, "./src/game/assets/layer-1.png");
+        this.load.image(KEYS.REPAIRPARTICLE, './src/game/assets/repair_particle.png');
     }
 
     create() {

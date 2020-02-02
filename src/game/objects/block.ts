@@ -26,9 +26,7 @@ export class Block extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.x <= (Block.SIZE - 1) * -1) {
-            this.setX(this.scene.sys.canvas.width + Block.SIZE);
             this.destroy();
         }
-
     }
 }
