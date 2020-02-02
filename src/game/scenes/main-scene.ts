@@ -48,6 +48,7 @@ export class MainScene extends Phaser.Scene {
     scream: Phaser.Sound.BaseSound;
     yawnTimer: number = 0;
     dead: boolean = false;
+    playerSprites: number = 43;
 
     constructor() {
         super("PlayGame");
@@ -64,7 +65,7 @@ export class MainScene extends Phaser.Scene {
             frameWidth: 220,
             frameHeight: 350,
             startFrame: 0,
-            endFrame: 44
+            endFrame: this.playerSprites
         });
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
         this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
@@ -85,7 +86,7 @@ export class MainScene extends Phaser.Scene {
 
         let animConfig = {
             key: ANIMATION.SLEEPWALK,
-            frames: this.anims.generateFrameNumbers(KEYS.PLAYER, {start: 0, end: 43}),
+            frames: this.anims.generateFrameNumbers(KEYS.PLAYER, {start: 0, end: this.playerSprites}),
             frameRate: 43,
             yoyo: false,
             repeat: -1
