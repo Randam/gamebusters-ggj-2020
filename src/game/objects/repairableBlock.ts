@@ -62,8 +62,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         }
 
         if (this.particleTimer > 30 && this.emitter !== undefined && this.repairing && !this.repaired) {
-            //this.emitter.stop();
-            this.emitter.manager.emitters.removeAll();
+            this.emitter.stop();
             this.particleTimer = 0;
         }
     }
