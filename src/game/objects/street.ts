@@ -1,4 +1,4 @@
-export class Block extends Phaser.GameObjects.Sprite {
+export class Street extends Phaser.GameObjects.Sprite {
     static SIZE = 300;
 
     constructor(params) {
@@ -16,17 +16,16 @@ export class Block extends Phaser.GameObjects.Sprite {
 
         // physics
         this.scene.physics.world.enable(this);
-        this.body.setSize(50, 4);
+        this.body.setSize(1, 1);
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
         this.body.setVelocityX(-100);
-        this.setScale(3.75, 1);
-        this.setVisible(false);
+        this.setVisible(true);
     }
 
     update() {
-        if (this.x <= (Block.SIZE - 1) * -1) {
-            this.setX(this.scene.sys.canvas.width + Block.SIZE);
+        if (this.x <= (Street.SIZE - 1) * -1) {
+            this.setX(this.scene.sys.canvas.width + Street.SIZE);
         }
 
     }
