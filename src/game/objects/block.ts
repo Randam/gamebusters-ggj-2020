@@ -36,10 +36,13 @@ export class Block extends Phaser.GameObjects.Sprite {
             this.setX((streetTiles.length - 1) * Block.SIZE);
             if (this.repairblock) {
                 this.setY(this.scene.sys.canvas.height + 500);
+                this.repairblock.repaired = false;
             }
         }
 
         if (this.repairblock && this.repairblock.repaired && this.y !== this.scene.sys.canvas.height - 225) {
+            this.repairblock.repaired = true;
+            this.repairblock.repairing = false;
             this.setY(this.scene.sys.canvas.height - 225);
         }
     }
