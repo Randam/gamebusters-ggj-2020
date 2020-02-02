@@ -9,7 +9,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
     emitter: Phaser.GameObjects.Particles.ParticleEmitter;
     particles: any;
 
-        constructor(params) {
+    constructor(params) {
         super(params.scene, params.x, params.y, params.key);
         // variables
         this.initSprite();
@@ -52,7 +52,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
                     angle: Math.floor(Math.random() * 90) + 225,
                     blendMode: BlendModes.ADD
                 });
-                this.emitter.setPosition( this.x, this.y);
+                this.emitter.setPosition(this.x, this.y);
             });
         }
 

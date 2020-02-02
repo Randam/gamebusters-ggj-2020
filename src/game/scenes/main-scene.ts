@@ -4,7 +4,7 @@ import {RepairableBlock} from "../objects/repairableBlock";
 import {BGLayer} from "../objects/bglayer";
 
 import GroupConfig = Phaser.GameObjects.Group;
-import { Street } from "../objects/street";
+import {Street} from "../objects/street";
 
 export enum KEYS {
     BLOCK1 = "block1",
@@ -53,8 +53,8 @@ export class MainScene extends Phaser.Scene {
     playerSprites: number = 43;
     distance: number;
     distanceText: Phaser.GameObjects.Text;
-    streetTiles: Array<number> = [1,2,3,4,5,6,1,2,1,2,3,4,5,6];
-    fallTiles: Array<number> =   [1,1,1,1,1,0,1,1,1,1,1,1,1,0];
+    streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6];
+    fallTiles: Array<number> = [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0];
     street: GroupConfig;
 
     constructor() {
@@ -82,7 +82,7 @@ export class MainScene extends Phaser.Scene {
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
         this.load.image(KEYS.BGLAYER2, "./src/game/assets/layer-1.png");
 
-        for(let x=1; x<=6; x++) {
+        for (let x = 1; x <= 6; x++) {
             this.load.image("street" + x.toString(), "./src/game/assets/blocks/0" + x.toString() + ".png");
         }
 
@@ -170,7 +170,7 @@ export class MainScene extends Phaser.Scene {
                         x: x * Block.SIZE,
                         y: this.sys.canvas.height - 200,
                         key: KEYS.BLOCK1
-                }));
+                    }));
             } else {
                 this.blocks.add(
                     new Block({
@@ -178,7 +178,7 @@ export class MainScene extends Phaser.Scene {
                         x: x * Block.SIZE,
                         y: this.sys.canvas.height + 500,
                         key: KEYS.BLOCK1
-                }));
+                    }));
             }
         }
 
@@ -223,12 +223,18 @@ export class MainScene extends Phaser.Scene {
         this.camera = this.cameras.main.startFollow(this.player, false, 0, 0, -300, 0);
         this.camera.setScroll(0);
 
-        this.distanceText = this.add.text(this.sys.canvas.width - 50, 20, 'DISTANCE: ' + this.distance.toString(), { fontFamily: 'Copperfield', fontSize: 20, color: 'white', boundsAlignH: "right", boundsAlignV: "middle"});        
+        this.distanceText = this.add.text(this.sys.canvas.width - 50, 20, 'DISTANCE: ' + this.distance.toString(), {
+            fontFamily: 'Copperfield',
+            fontSize: 20,
+            color: 'white',
+            boundsAlignH: "right",
+            boundsAlignV: "middle"
+        });
         this.distanceText.setOrigin(1, 0);
     }
 
     pad(num: number, size: number) {
-        var s = num+"";
+        var s = num + "";
         while (s.length < size) s = "0" + s;
         return s;
     }
@@ -243,7 +249,13 @@ export class MainScene extends Phaser.Scene {
 
         if (this.player.y > this.sys.canvas.height + 200 && !this.dead) {
             this.dead = true;
-            var txt = this.add.text(this.sys.canvas.width / 2, this.sys.canvas.height / 4, '   Your sleep has become eternal...', { fontFamily: 'Perpetua', fontSize: 64, color: 'white', boundsAlignH: "center", boundsAlignV: "middle"});        
+            var txt = this.add.text(this.sys.canvas.width / 2, this.sys.canvas.height / 4, '   Your sleep has become eternal...', {
+                fontFamily: 'Perpetua',
+                fontSize: 64,
+                color: 'white',
+                boundsAlignH: "center",
+                boundsAlignV: "middle"
+            });
             txt.setOrigin(0.5, 0);
             this.input.on("pointerdown", function () {
                 this.music.stop();

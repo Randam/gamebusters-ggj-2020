@@ -1,4 +1,4 @@
-import { KEYS } from "./main-scene";
+import {KEYS} from "./main-scene";
 
 export class BootScene extends Phaser.Scene {
     logo_off: Phaser.GameObjects.Image;
