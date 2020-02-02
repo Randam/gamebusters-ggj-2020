@@ -49,6 +49,8 @@ export class MainScene extends Phaser.Scene {
     yawnTimer: number = 0;
     dead: boolean = false;
     playerSprites: number = 43;
+    distance: number;
+    distanceText: Phaser.GameObjects.Text;
 
     constructor() {
         super("PlayGame");
@@ -77,6 +79,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.distance = 0;
         this.dead = false;
 
         this.yawn[0] = this.sound.add(SOUND.YAWN1);
@@ -134,7 +137,7 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x <= 17; x++) {
+        for (let x = 0; x <= 7; x++) {
             this.blocks.add(
                 new Block({
                     scene: this,
@@ -184,6 +187,15 @@ export class MainScene extends Phaser.Scene {
 
         this.camera = this.cameras.main.startFollow(this.player, false, 0, 0, -300, 0);
         this.camera.setScroll(0);
+
+        this.distanceText = this.add.text(this.sys.canvas.width - 50, 20, 'DISTANCE: ' + this.distance.toString(), { fontFamily: 'Copperfield', fontSize: 20, color: 'white', boundsAlignH: "right", boundsAlignV: "middle"});        
+        this.distanceText.setOrigin(1, 0);
+    }
+
+    pad(num: number, size: number) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
     }
 
     update() {
@@ -193,6 +205,8 @@ export class MainScene extends Phaser.Scene {
         this.playYawnSound();
         this.addBlocks();
 
+        this.distanceText.setText("DISTANCE: " + this.pad(Math.floor(this.distance / 10), 6) + " M");
+
         if (this.player.y > this.sys.canvas.height + 200 && !this.dead) {
             this.dead = true;
             var txt = this.add.text(this.sys.canvas.width / 2, this.sys.canvas.height / 4, '   Your sleep has become eternal...', { fontFamily: 'Perpetua', fontSize: 64, color: 'white', boundsAlignH: "center", boundsAlignV: "middle"});        
@@ -201,8 +215,10 @@ export class MainScene extends Phaser.Scene {
                 this.music.stop();
                 this.scene.start("GameOver");
             }, this);
-    
         }
+
+        if (!this.dead)
+            this.distance++;
     }
 
     moveBackgrounds() {
