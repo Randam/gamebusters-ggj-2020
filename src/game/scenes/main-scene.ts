@@ -8,8 +8,8 @@ import {Street} from "../objects/street";
 
 export enum KEYS {
     BLOCK1 = "block1",
-    BLOCK2 = "block2",
-    REPAIRBLOCK = "repairblock",
+    BRIDGE_FIXED = "bridge",
+    BRIDGE_BROKEN = "bridgebroken",
     PLAYER = "player",
     BACKGROUND = "background",
     BGLAYER0 = "bglayer0",
@@ -53,7 +53,7 @@ export class MainScene extends Phaser.Scene {
     playerSprites: number = 43;
     distance: number;
     distanceText: Phaser.GameObjects.Text;
-    streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6];
+    streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6]; // 6 = hole in street
     fallTiles: Array<number> = [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0];
     street: GroupConfig;
 
@@ -75,8 +75,8 @@ export class MainScene extends Phaser.Scene {
             endFrame: this.playerSprites
         });
         this.load.image(KEYS.BLOCK1, "./src/game/assets/stone1.jpg");
-        this.load.image(KEYS.BLOCK2, "./src/game/assets/stone2.jpg");
-        this.load.image(KEYS.REPAIRBLOCK, "./src/game/assets/stone3.jpg");
+        this.load.image(KEYS.BRIDGE_FIXED, "./src/game/assets/bridge.png");
+        this.load.image(KEYS.BRIDGE_BROKEN, "./src/game/assets/bridge_broken.png");
         this.load.image(KEYS.BACKGROUND, "./src/game/assets/layer-fixed.jpg");
         this.load.image(KEYS.BGLAYER0, "./src/game/assets/layer-0.png");
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
@@ -125,12 +125,10 @@ export class MainScene extends Phaser.Scene {
         this.background.setOrigin(0);
 
         this.blocks = this.add.group({
-            /*classType: Blocks,*/
             runChildUpdate: true
         });
 
         this.repairBlocks = this.add.group({
-            /*classType: Blocks,*/
             runChildUpdate: true
         });
 
@@ -162,7 +160,7 @@ export class MainScene extends Phaser.Scene {
                 }));
         }
 
-        for (let x = 0; x <= this.fallTiles.length; x++) {
+        for (let x = 0; x < this.fallTiles.length; x++) {
             if (this.fallTiles[x] === 1) {
                 this.blocks.add(
                     new Block({
@@ -172,27 +170,23 @@ export class MainScene extends Phaser.Scene {
                         key: KEYS.BLOCK1
                     }));
             } else {
+                const repairblock: RepairableBlock = new RepairableBlock({
+                    scene: this,
+                    x: x * Block.SIZE,
+                    y: 0,
+                    key: KEYS.BRIDGE_BROKEN
+                });
+                this.repairBlocks.add(repairblock);
                 this.blocks.add(
                     new Block({
                         scene: this,
                         x: x * Block.SIZE,
                         y: this.sys.canvas.height + 500,
-                        key: KEYS.BLOCK1
+                        key: KEYS.BLOCK1,
+                        repairblock: repairblock
                     }));
             }
         }
-
-        // for (let x = 0; x < 20; x++) {
-        //     if (Math.random() > .8) {
-        //         this.repairBlocks.add(
-        //             new RepairableBlock({
-        //                 scene: this,
-        //                 x: x * 60,
-        //                 y: this.sys.canvas.height - 200,
-        //                 key: KEYS.REPAIRBLOCK
-        //             }));
-        //     }
-        // }
 
         this.player = new Player({
             scene: this,

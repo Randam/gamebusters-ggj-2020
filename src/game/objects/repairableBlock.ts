@@ -23,21 +23,21 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
 
         // physics
         this.scene.physics.world.enable(this);
-        this.body.setSize(1, 1);
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
         this.body.setVelocityX(-100);
         this.setInteractive();
-        this.setScale(0.5);
-
         this.repaired = false;
         this.repairing = false;
         this.particles = this.scene.add.particles(KEYS.REPAIRPARTICLE);
+        this.setVisible(true);
     }
 
     update() {
         if (this.x <= (Block.SIZE - 1) * -1) {
-            this.destroy();
+            this.setX(this.scene.sys.canvas.width + Block.SIZE);
+            this.repaired = false;
+            this.setTexture(KEYS.BRIDGE_BROKEN);
         }
 
         if (!this.repaired && !this.repairing) {
@@ -66,6 +66,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
             this.repairing = false;
             this.particles = undefined;
             this.emitter = undefined;
+            this.setTexture(KEYS.BRIDGE_FIXED);
         }
     }
 }
