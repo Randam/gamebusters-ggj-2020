@@ -4,6 +4,7 @@ import {RepairableBlock} from "../objects/repairableBlock";
 import {BGLayer} from "../objects/bglayer";
 
 import GroupConfig = Phaser.GameObjects.Group;
+import { Street } from "../objects/street";
 
 export enum KEYS {
     BLOCK1 = "block1",
@@ -52,6 +53,9 @@ export class MainScene extends Phaser.Scene {
     playerSprites: number = 43;
     distance: number;
     distanceText: Phaser.GameObjects.Text;
+    streetTiles: Array<number> = [1,2,3,4,5,6,1,2,1,2,3,4,5,6];
+    fallTiles: Array<number> =   [1,1,1,1,1,0,1,1,1,1,1,1,1,0];
+    street: GroupConfig;
 
     constructor() {
         super("PlayGame");
@@ -77,6 +81,11 @@ export class MainScene extends Phaser.Scene {
         this.load.image(KEYS.BGLAYER0, "./src/game/assets/layer-0.png");
         this.load.image(KEYS.BGLAYER1, "./src/game/assets/layer-2.png");
         this.load.image(KEYS.BGLAYER2, "./src/game/assets/layer-1.png");
+
+        for(let x=1; x<=6; x++) {
+            this.load.image("street" + x.toString(), "./src/game/assets/blocks/0" + x.toString() + ".png");
+        }
+
         this.load.image(KEYS.REPAIRPARTICLE, './src/game/assets/repair_particle.png');
     }
 
@@ -125,6 +134,10 @@ export class MainScene extends Phaser.Scene {
             runChildUpdate: true
         });
 
+        this.street = this.add.group({
+            runChildUpdate: true
+        });
+
         this.bglayer1 = new BGLayer({
             scene: this,
             x: 0,
@@ -139,32 +152,52 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x <= 7; x++) {
-            this.blocks.add(
-                new Block({
+        for (let x = 0; x < this.streetTiles.length; x++) {
+            this.street.add(
+                new Street({
                     scene: this,
-                    x: x * Block.SIZE,
-                    y: this.sys.canvas.height - Block.SIZE,
-                    key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
+                    x: x * Street.SIZE,
+                    y: 0,
+                    key: "street" + this.streetTiles[x]
                 }));
         }
 
-        for (let x = 0; x < 20; x++) {
-            if (Math.random() > .8) {
-                this.repairBlocks.add(
-                    new RepairableBlock({
+        for (let x = 0; x <= this.fallTiles.length; x++) {
+            if (this.fallTiles[x] === 1) {
+                this.blocks.add(
+                    new Block({
                         scene: this,
-                        x: x * 60,
-                        y: this.sys.canvas.height - 60,
-                        key: KEYS.REPAIRBLOCK
-                    }));
+                        x: x * Block.SIZE,
+                        y: this.sys.canvas.height - 200,
+                        key: KEYS.BLOCK1
+                }));
+            } else {
+                this.blocks.add(
+                    new Block({
+                        scene: this,
+                        x: x * Block.SIZE,
+                        y: this.sys.canvas.height + 500,
+                        key: KEYS.BLOCK1
+                }));
             }
         }
+
+        // for (let x = 0; x < 20; x++) {
+        //     if (Math.random() > .8) {
+        //         this.repairBlocks.add(
+        //             new RepairableBlock({
+        //                 scene: this,
+        //                 x: x * 60,
+        //                 y: this.sys.canvas.height - 200,
+        //                 key: KEYS.REPAIRBLOCK
+        //             }));
+        //     }
+        // }
 
         this.player = new Player({
             scene: this,
             x: this.sys.canvas.width * 0.25,
-            y: 534,
+            y: this.sys.canvas.height - 200 - 160,
             key: KEYS.PLAYER,
             scream: this.scream
         });
@@ -205,7 +238,6 @@ export class MainScene extends Phaser.Scene {
 
         this.moveBackgrounds();
         this.playYawnSound();
-        this.addBlocks();
 
         this.distanceText.setText("DISTANCE: " + this.pad(Math.floor(this.distance / 10), 6) + " M");
 
@@ -215,7 +247,7 @@ export class MainScene extends Phaser.Scene {
             txt.setOrigin(0.5, 0);
             this.input.on("pointerdown", function () {
                 this.music.stop();
-                this.scene.start("GameOver");
+                this.scene.start("Boot");
             }, this);
         }
 
@@ -224,27 +256,15 @@ export class MainScene extends Phaser.Scene {
     }
 
     moveBackgrounds() {
-        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5;
-        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1;
-        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2;
+        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5 + (this.distance / 5000);
+        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1 + (this.distance / 1000);
+        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2 + (this.distance / 2000);
     }
 
     playYawnSound() {
         if (this.bglayer1.tilePositionX > this.yawnTimer && !this.player.falling) {
             this.yawn[Math.floor(Math.random() * 3)].play();
             this.yawnTimer = this.yawnTimer + Math.random() * 500 + 200;
-        }
-    }
-
-    addBlocks() {
-        if (this.blocks.getLength() <= 17) {
-            this.blocks.add(
-                new Block({
-                    scene: this,
-                    x: this.sys.canvas.width,
-                    y: this.sys.canvas.height - Block.SIZE,
-                    key: Math.random() > .2 ? KEYS.BLOCK1 : KEYS.BLOCK2
-                }));
         }
     }
 }

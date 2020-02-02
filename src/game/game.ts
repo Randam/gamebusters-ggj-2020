@@ -1,6 +1,7 @@
 import "phaser";
 import { MainScene } from "./scenes/main-scene";
 import { GameOverScene } from "./scenes/game-over-scene";
+import { BootScene } from "./scenes/boot-scene";
 import GameConfig = Phaser.Types.Core.GameConfig;
 
 // main game configuration
@@ -8,7 +9,7 @@ const config: GameConfig = {
   type: Phaser.AUTO,
   width: 1360,
   height: 750,
-  scene: [GameOverScene,MainScene],
+  scene: [MainScene, BootScene, GameOverScene],
   backgroundColor: 0x444444,
 
   // physics settings
