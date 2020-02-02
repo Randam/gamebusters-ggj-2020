@@ -54,7 +54,7 @@ export class MainScene extends Phaser.Scene {
     distance: number;
     distanceText: Phaser.GameObjects.Text;
     streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6];
-    fallTiles: Array<number> = [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0];
+    fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0];
     street: GroupConfig;
 
     constructor() {
@@ -182,17 +182,17 @@ export class MainScene extends Phaser.Scene {
             }
         }
 
-        // for (let x = 0; x < 20; x++) {
-        //     if (Math.random() > .8) {
-        //         this.repairBlocks.add(
-        //             new RepairableBlock({
-        //                 scene: this,
-        //                 x: x * 60,
-        //                 y: this.sys.canvas.height - 200,
-        //                 key: KEYS.REPAIRBLOCK
-        //             }));
-        //     }
-        // }
+        for (let x = 0; x < 20; x++) {
+            if (Math.random() > .8) {
+                this.repairBlocks.add(
+                    new RepairableBlock({
+                        scene: this,
+                        x: x * 60,
+                        y: this.sys.canvas.height - 200,
+                        key: KEYS.REPAIRBLOCK
+                    }));
+            }
+        }
 
         this.player = new Player({
             scene: this,
@@ -268,9 +268,9 @@ export class MainScene extends Phaser.Scene {
     }
 
     moveBackgrounds() {
-        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5 + (this.distance / 5000);
-        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1 + (this.distance / 1000);
-        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2 + (this.distance / 2000);
+        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 3;
+        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 0.75;
+        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 1;
     }
 
     playYawnSound() {

@@ -29,6 +29,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(-100);
         this.setInteractive();
         this.setScale(0.5);
+        this.setVisible(true);
 
         this.repaired = false;
         this.repairing = false;
@@ -42,30 +43,27 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
 
         if (!this.repaired && !this.repairing) {
             this.on("pointerdown", function () {
-                this.repairing = true;
-                this.particleTimer = 60;
+                if (!this.repairing && !this.repaired) {
+                    this.repairing = true;
+                    this.particleTimer = 1;
 
-                this.emitter = this.particles.createEmitter({
-                    speed: 200 * Math.random(),
-                    frequency: 1000,
-                    lifespan: 500,
-                    angle: Math.floor(Math.random() * 90) + 225,
-                    blendMode: BlendModes.ADD
-                });
-                this.emitter.setPosition(this.x, this.y);
+                    this.emitter = this.particles.createEmitter({
+                        speed: 100,
+                        blendMode: BlendModes.ADD
+                    });
+                    this.emitter.setPosition(this.x, this.y);
+                }
             });
         }
 
         if (this.particleTimer >= 0 && this.repairing) {
-            this.particleTimer -= 5;
+            this.particleTimer++;
         }
 
-        if (this.particleTimer > 0 && this.emitter !== undefined && this.repairing && !this.repaired) {
-            this.emitter.stop();
-            this.repaired = true;
-            this.repairing = false;
-            this.particles = undefined;
-            this.emitter = undefined;
+        if (this.particleTimer > 30 && this.emitter !== undefined && this.repairing && !this.repaired) {
+            //this.emitter.stop();
+            this.emitter.manager.emitters.removeAll();
+            this.particleTimer = 0;
         }
     }
 }

@@ -25,7 +25,7 @@ export class Player extends Phaser.GameObjects.Sprite {
     update(...args): void {
         super.update(...args);
 
-        if (this.body.velocity.y > 0) {
+        if (this.body.velocity.y > 0 && this.y > this.scene.sys.canvas.height - 200 - 130) {
             if (!this.falling) {
                 this.scream.play();
             }
