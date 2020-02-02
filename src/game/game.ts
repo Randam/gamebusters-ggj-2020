@@ -18,6 +18,10 @@ const config: GameConfig = {
     }
 };
 
+export const settings = {
+  walkSpeed: 180
+}
+
 export class Game extends Phaser.Game {
     constructor(config: GameConfig) {
         super(config);

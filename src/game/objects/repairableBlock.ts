@@ -1,6 +1,7 @@
 import {Block} from "./block";
 import {KEYS} from "../scenes/main-scene";
 import BlendModes = Phaser.BlendModes;
+import { settings } from "../game";
 
 export class RepairableBlock extends Phaser.GameObjects.Sprite {
     repairing: boolean;
@@ -26,7 +27,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         this.body.setSize(1, 1);
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
-        this.body.setVelocityX(-100);
+        this.body.setVelocityX(settings.walkSpeed * -1);
         this.setInteractive();
         this.setScale(0.5);
         this.setVisible(true);

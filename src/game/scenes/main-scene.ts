@@ -268,7 +268,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     moveBackgrounds() {
-        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 3;
+        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 4;
         this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 0.75;
         this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 1;
     }

@@ -1,3 +1,5 @@
+import { settings } from "../game";
+
 export class Block extends Phaser.GameObjects.Sprite {
     static SIZE = 300;
 
@@ -19,7 +21,7 @@ export class Block extends Phaser.GameObjects.Sprite {
         this.body.setSize(50, 4);
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
-        this.body.setVelocityX(-100);
+        this.body.setVelocityX(settings.walkSpeed * -1);
         this.setScale(3.75, 1);
         this.setVisible(false);
     }

@@ -1,3 +1,5 @@
+import { settings } from "../game";
+
 export class Player extends Phaser.GameObjects.Sprite {
     private scream: Phaser.Sound.BaseSound;
     public falling: boolean = false;
@@ -15,7 +17,7 @@ export class Player extends Phaser.GameObjects.Sprite {
         // physics
         this.scene.physics.world.enable(this);
         this.body.setGravityY(4000);
-        this.body.setVelocityX(100);
+        this.body.setVelocityX(settings.walkSpeed);
         this.body.setSize(this.width / 1.5);
 
         // sprite
