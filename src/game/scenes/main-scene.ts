@@ -104,7 +104,7 @@ export class MainScene extends Phaser.Scene {
         let animConfig = {
             key: ANIMATION.SLEEPWALK,
             frames: this.anims.generateFrameNumbers(KEYS.PLAYER, {start: 0, end: this.playerSprites}),
-            frameRate: 43,
+            frameRate: 43 * 2,
             yoyo: false,
             repeat: -1
         };
