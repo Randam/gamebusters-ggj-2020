@@ -1,6 +1,7 @@
 import {Block} from "./block";
 import {KEYS} from "../scenes/main-scene";
 import BlendModes = Phaser.BlendModes;
+import { settings } from "../game";
 
 export class RepairableBlock extends Phaser.GameObjects.Sprite {
     repairing: boolean;
@@ -25,8 +26,11 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         this.scene.physics.world.enable(this);
         this.body.setAllowGravity(false);
         this.body.setImmovable(true);
-        this.body.setVelocityX(-100);
+        this.body.setVelocityX(settings.walkSpeed * -1);
         this.setInteractive();
+        this.setScale(0.5);
+        this.setVisible(true);
+
         this.repaired = false;
         this.repairing = false;
         this.particles = this.scene.add.particles(KEYS.REPAIRPARTICLE);
@@ -42,30 +46,27 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
 
         if (!this.repaired && !this.repairing) {
             this.on("pointerdown", function () {
-                this.repairing = true;
-                this.particleTimer = 60;
+                if (!this.repairing && !this.repaired) {
+                    this.repairing = true;
+                    this.particleTimer = 1;
 
-                this.emitter = this.particles.createEmitter({
-                    speed: 200 * Math.random(),
-                    frequency: 1000,
-                    lifespan: 500,
-                    angle: Math.floor(Math.random() * 90) + 225,
-                    blendMode: BlendModes.ADD
-                });
-                this.emitter.setPosition(this.x, this.y);
+                    this.emitter = this.particles.createEmitter({
+                        speed: 100,
+                        blendMode: BlendModes.ADD
+                    });
+                    this.emitter.setPosition(this.x, this.y);
+                }
             });
         }
 
         if (this.particleTimer >= 0 && this.repairing) {
-            this.particleTimer -= 5;
+            this.particleTimer++;
         }
 
-        if (this.particleTimer > 0 && this.emitter !== undefined && this.repairing && !this.repaired) {
+        if (this.particleTimer > 30 && this.emitter !== undefined && this.repairing && !this.repaired) {
             this.emitter.stop();
+            this.particleTimer = 0;
             this.repaired = true;
-            this.repairing = false;
-            this.particles = undefined;
-            this.emitter = undefined;
             this.setTexture(KEYS.BRIDGE_FIXED);
         }
     }

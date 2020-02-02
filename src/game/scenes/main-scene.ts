@@ -262,9 +262,9 @@ export class MainScene extends Phaser.Scene {
     }
 
     moveBackgrounds() {
-        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 5 + (this.distance / 5000);
-        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 1 + (this.distance / 1000);
-        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 2 + (this.distance / 2000);
+        this.bglayer0.tilePositionX = this.bglayer0.tilePositionX + 4;
+        this.bglayer1.tilePositionX = this.bglayer1.tilePositionX + 0.75;
+        this.bglayer2.tilePositionX = this.bglayer2.tilePositionX + 1;
     }
 
     playYawnSound() {

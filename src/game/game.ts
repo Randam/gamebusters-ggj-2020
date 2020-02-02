@@ -9,7 +9,7 @@ const config: GameConfig = {
     type: Phaser.AUTO,
     width: 1360,
     height: 750,
-    scene: [MainScene, BootScene, GameOverScene],
+    scene: [GameOverScene, MainScene, BootScene],
     backgroundColor: 0x444444,
 
     // physics settings
@@ -17,6 +17,10 @@ const config: GameConfig = {
         default: "arcade"
     }
 };
+
+export const settings = {
+  walkSpeed: 180
+}
 
 export class Game extends Phaser.Game {
     constructor(config: GameConfig) {
