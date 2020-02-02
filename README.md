@@ -1,6 +1,6 @@
 # Sleepy Steve, The Wandering Wanker
 
-[Sleepy Steve](https://globalgamejam.org/2020/games/sleepy-steve-3) is a game created during the 2020 Global Game Jam in the Dutch Innovation Factory. S
+[Sleepy Steve](https://globalgamejam.org/2020/games/sleepy-steve-3) is a game created during the 2020 Global Game Jam in the Dutch Innovation Factory.
 
 It was made in the Phaser 3 HTML5 framework.
 
