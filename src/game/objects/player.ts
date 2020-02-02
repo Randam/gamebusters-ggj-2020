@@ -18,10 +18,10 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.scene.physics.world.enable(this);
         this.body.setGravityY(4000);
         this.body.setVelocityX(settings.walkSpeed);
-        this.body.setSize(this.width / 1.5);
+        this.body.setSize(this.width);
 
         // sprite
-        this.setScale(1);
+        this.setScale(0.5);
     }
 
     update(...args): void {

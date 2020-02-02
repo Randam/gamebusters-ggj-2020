@@ -27,7 +27,7 @@ export class Block extends Phaser.GameObjects.Sprite {
         this.body.setImmovable(true);
         this.body.setVelocityX(settings.walkSpeed * -1);
         this.setScale(3.75, 1);
-        this.setVisible(true);
+        this.setVisible(false);
     }
 
     update() {
@@ -38,8 +38,8 @@ export class Block extends Phaser.GameObjects.Sprite {
             }
         }
 
-        if (this.repairblock && this.repairblock.repaired && this.y !== this.scene.sys.canvas.height - 200) {
-            this.setY(this.scene.sys.canvas.height - 200);
+        if (this.repairblock && this.repairblock.repaired && this.y !== this.scene.sys.canvas.height - 225) {
+            this.setY(this.scene.sys.canvas.height - 225);
         }
     }
 }
