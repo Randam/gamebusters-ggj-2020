@@ -6,10 +6,10 @@ import {BGLayer} from "../objects/bglayer";
 import GroupConfig = Phaser.GameObjects.Group;
 import {Street} from "../objects/street";
 
-//export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6, 6, 1, 2, 6, 2, 6, 3, 6]; // 6 = hole in street
-//export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1];
-export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6]; // 6 = hole in street
-export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0];
+export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6, 6, 1, 2, 6, 2, 6, 3, 6]; // 6 = hole in street
+export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0];
+//export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6]; // 6 = hole in street
+//export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0];
 
 export enum KEYS {
     BLOCK1 = "block1",
