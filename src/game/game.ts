@@ -9,7 +9,7 @@ const config: GameConfig = {
     type: Phaser.AUTO,
     width: 1360,
     height: 750,
-    scene: [MainScene, GameOverScene, BootScene],
+    scene: [BootScene,MainScene, GameOverScene],
     backgroundColor: 0x444444,
 
     // physics settings
