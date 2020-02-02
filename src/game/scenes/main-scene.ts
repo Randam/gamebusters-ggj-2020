@@ -6,6 +6,11 @@ import {BGLayer} from "../objects/bglayer";
 import GroupConfig = Phaser.GameObjects.Group;
 import {Street} from "../objects/street";
 
+//export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6, 6, 1, 2, 6, 2, 6, 3, 6]; // 6 = hole in street
+//export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1];
+export const streetTiles: Array<number> = [1, 2, 3, 4, 5, 6]; // 6 = hole in street
+export const fallTiles: Array<number> =   [1, 1, 1, 1, 1, 0];
+
 export enum KEYS {
     BLOCK1 = "block1",
     BRIDGE_FIXED = "bridge",
@@ -53,8 +58,6 @@ export class MainScene extends Phaser.Scene {
     playerSprites: number = 43;
     distance: number;
     distanceText: Phaser.GameObjects.Text;
-    streetTiles: Array<number> = [1, 2, 3, 4, 5, 6, 1, 2, 1, 2, 3, 4, 5, 6]; // 6 = hole in street
-    fallTiles: Array<number> = [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0];
     street: GroupConfig;
 
     constructor() {
@@ -150,18 +153,18 @@ export class MainScene extends Phaser.Scene {
             key: KEYS.BGLAYER2
         });
 
-        for (let x = 0; x < this.streetTiles.length; x++) {
+        for (let x = 0; x < streetTiles.length; x++) {
             this.street.add(
                 new Street({
                     scene: this,
                     x: x * Street.SIZE,
                     y: 0,
-                    key: "street" + this.streetTiles[x]
+                    key: "street" + streetTiles[x]
                 }));
         }
 
-        for (let x = 0; x < this.fallTiles.length; x++) {
-            if (this.fallTiles[x] === 1) {
+        for (let x = 0; x < fallTiles.length; x++) {
+            if (fallTiles[x] === 1) {
                 this.blocks.add(
                     new Block({
                         scene: this,
@@ -202,7 +205,7 @@ export class MainScene extends Phaser.Scene {
         this.bglayer0 = new BGLayer({
             scene: this,
             x: 0,
-            y: 0,
+            y: 100,
             key: KEYS.BGLAYER0
         });
 

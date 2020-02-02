@@ -1,5 +1,6 @@
 import {RepairableBlock} from "./repairableBlock";
 import { settings } from "../game";
+import { streetTiles } from "../scenes/main-scene";
 
 export class Block extends Phaser.GameObjects.Sprite {
     static SIZE = 300;
@@ -32,7 +33,7 @@ export class Block extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.x <= (Block.SIZE - 1) * -1) {
-            this.setX(this.scene.sys.canvas.width + Block.SIZE);
+            this.setX((streetTiles.length - 1) * Block.SIZE);
             if (this.repairblock) {
                 this.setY(this.scene.sys.canvas.height + 500);
             }

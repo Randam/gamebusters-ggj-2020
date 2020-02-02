@@ -1,5 +1,5 @@
 import {Block} from "./block";
-import {KEYS} from "../scenes/main-scene";
+import {KEYS, streetTiles} from "../scenes/main-scene";
 import BlendModes = Phaser.BlendModes;
 import { settings } from "../game";
 
@@ -9,14 +9,12 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
     particleTimer: number = 0;
     emitter: Phaser.GameObjects.Particles.ParticleEmitter;
     particles: any;
-    originX: number;
 
     constructor(params) {
         super(params.scene, params.x, params.y, params.key);
         // variables
         this.initSprite();
         this.scene.add.existing(this);
-        this.originX = params.x;
     }
 
     private initSprite() {
@@ -40,7 +38,7 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.x <= (Block.SIZE - 1) * -1) {
-            this.setX(this.originX);
+            this.setX((streetTiles.length - 1) * Block.SIZE);
             this.repaired = false;
             this.setTexture(KEYS.BRIDGE_BROKEN);
         }

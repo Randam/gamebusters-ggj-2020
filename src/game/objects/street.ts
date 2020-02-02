@@ -1,9 +1,11 @@
 import { settings } from "../game";
+import { streetTiles } from "../scenes/main-scene";
 
 export class Street extends Phaser.GameObjects.Sprite {
     static SIZE = 300;
 
     constructor(params) {
+
         super(params.scene, params.x, params.y, params.key);
 
         // variables
@@ -27,7 +29,7 @@ export class Street extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.x <= (Street.SIZE - 1) * -1) {
-            this.setX(this.scene.sys.canvas.width + Street.SIZE);
+            this.setX((streetTiles.length - 1) * Street.SIZE);
         }
 
     }
