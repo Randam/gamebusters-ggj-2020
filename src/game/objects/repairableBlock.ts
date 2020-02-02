@@ -28,7 +28,6 @@ export class RepairableBlock extends Phaser.GameObjects.Sprite {
         this.body.setImmovable(true);
         this.body.setVelocityX(settings.walkSpeed * -1);
         this.setInteractive();
-        this.setScale(0.5);
         this.setVisible(true);
 
         this.repaired = false;
