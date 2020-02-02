@@ -5,7 +5,7 @@ import {BGLayer} from "../objects/bglayer";
 
 import GroupConfig = Phaser.GameObjects.Group;
 
-enum KEYS {
+export enum KEYS {
     BLOCK1 = "block1",
     BLOCK2 = "block2",
     REPAIRBLOCK = "repairblock",
@@ -47,6 +47,7 @@ export class MainScene extends Phaser.Scene {
     yawn: Array<Phaser.Sound.BaseSound> = [];
     scream: Phaser.Sound.BaseSound;
     yawnTimer: number = 0;
+    dead: boolean = false;
 
     constructor() {
         super("PlayGame");
@@ -75,6 +76,8 @@ export class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.dead = false;
+
         this.yawn[0] = this.sound.add(SOUND.YAWN1);
         this.yawn[1] = this.sound.add(SOUND.YAWN2);
         this.yawn[2] = this.sound.add(SOUND.YAWN3);
@@ -188,6 +191,17 @@ export class MainScene extends Phaser.Scene {
         this.moveBackgrounds();
         this.playYawnSound();
         this.addBlocks();
+
+        if (this.player.y > this.sys.canvas.height + 200 && !this.dead) {
+            this.dead = true;
+            var txt = this.add.text(this.sys.canvas.width / 2, this.sys.canvas.height / 4, '   Your sleep has become eternal...', { fontFamily: 'Perpetua', fontSize: 64, color: 'white', boundsAlignH: "center", boundsAlignV: "middle"});        
+            txt.setOrigin(0.5, 0);
+            this.input.on("pointerdown", function () {
+                this.music.stop();
+                this.scene.start("GameOver");
+            }, this);
+    
+        }
     }
 
     moveBackgrounds() {

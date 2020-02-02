@@ -30,9 +30,6 @@ export class Player extends Phaser.GameObjects.Sprite {
                 this.scream.play();
             }
             this.falling = true;
-            //    this.body.angularVelocity = 200;
-            //    this.body.angularAcceleration = 200;
-            //   this.body.allowRotation = true;
         }
     }
 }

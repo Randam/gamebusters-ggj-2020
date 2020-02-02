@@ -1,5 +1,6 @@
 export class Block extends Phaser.GameObjects.Sprite {
     static SIZE = 80;
+    public falling: boolean = false;
 
     constructor(params) {
         super(params.scene, params.x, params.y, params.key);
