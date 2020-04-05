@@ -11,3 +11,5 @@ You'll need NPM. Go to the game folder and run "npm install". Then run "npm run 
 ## How to play
 
 This game is about a guy named Steve. He is always sleepwalking and that can be quite dangerous! That's why you are going to help him, by repairing and fixing the road. Tap the bridges to fix them before Steve is there, otherwise he will die a painful and ignorant death. We had a lot of ideas to improve this game more, such as more ways for Steve to die (e.g. piano's that fall on his head, cracks in the road, broken lanterns that need to be fixed) but due to the time constraints we were only able to complete the bridges.
+
+![Sleepy Steve Gameplay](https://ggj.s3.amazonaws.com/styles/game_content__wide/games/screenshots/2020/02/272504/schermafdruk_2020-02-02_16.19.45.png?itok=t7syx0ba&timestamp=1580657920 "Sleepy Steve")
